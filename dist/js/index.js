@@ -65,4 +65,60 @@ document.addEventListener('DOMContentLoaded', () => {
         // input.parentElement.classList.remove('error');
         input.classList.remove('error')
     }
+    
+
+    var token = "20fef26e98b78eafa131c95ee35283da8da75f0f";
+    var type  = "ADDRESS";
+    var $region = $("#region");
+    var $city   = $("#city");
+    var $street = $("#street");
+    var $house  = $("#house");
+    var $settlement = $('#settlement');
+
+    // регион и район
+    $region.suggestions({
+        token: token,
+        type: type,
+        hint: false,
+        bounds: "region-area"
+    });
+
+    // город и населенный пункт
+    $city.suggestions({
+        token: token,
+        type: type,
+        hint: false,
+        bounds: "city-settlement",
+        constraints: $region
+    });
+
+    $settlement.suggestions({
+        token: token,
+        type: type,
+        hint: false,
+        bounds: "city-settlement",
+        constraints: $region
+    });
+
+    // улица
+    $street.suggestions({
+        token: token,
+        type: type,
+        hint: false,
+        bounds: "street",
+        constraints: $city,
+        count: 15
+    });
+
+    // дом
+    $house.suggestions({
+        token: token,
+        type: type,
+        hint: false,
+        noSuggestionsHint: false,
+        bounds: "house",
+        constraints: $street
+    });
+
+    console.log($house.suggestions())
 })
